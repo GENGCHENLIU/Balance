@@ -1,0 +1,12 @@
+Task based time management.
+
+Directory 'src/' contains the main program which depends on json-io 4.12.0.
+Directory 'tasks/' contains example Task definitions.
+
+Main program do not need to be aware of Task types at compile time. Simply 
+compile with json-io on the classpath.
+Tasks can be compiled individually with main program on the classpath.
+
+Compiled Task classes should be placed in the directory specified by the 
+'task_types_dir' property in the 'balance.properties' file. Files in said 
+directory will be loaded automatically at runtime.
