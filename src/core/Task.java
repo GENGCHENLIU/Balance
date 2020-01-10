@@ -73,6 +73,17 @@ public abstract class Task {
 	protected Task(final String name) {
 		this.name = name;
 	}
+	/**
+	 * Performs additional initialization in addition to the constructor. The default
+	 * implementation does nothing and simply returns this instance.
+	 * <p>
+	 * Fields do not have the proper values when accessed in the constructors during
+	 * deserialization. Initialization operations that use instance fields should be
+	 * placed in this method. Overriding methods should guard against repeated invocations
+	 * as necessary.
+	 * @return this instance
+	 */
+	public Task init() { return this; }
 
 	/**
 	 * Makes progress on this task. The definition of which may differ among different

@@ -86,7 +86,7 @@ enum Command {
 			}
 
 			for (final var taskName : balance.pendingDelete) {
-				try { Files.deleteIfExists(Path.of(taskName)); }
+				try { Files.deleteIfExists( savePath.resolve(Path.of(taskName)) ); }
 				catch (Exception e) {
 					Balance.error("Failed to delete old save file: " + taskName,
 							e, true);

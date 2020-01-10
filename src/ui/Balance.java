@@ -41,7 +41,7 @@ public final class Balance {
 	}
 
 
-	public static void main(final String... args) throws IOException {
+	public static void main(final String... args) {
 		final var config = BALANCE.getConfig();
 
 		// load Task class types
@@ -116,10 +116,15 @@ public final class Balance {
 		// start main loop
 		final var stdin = new BufferedReader(new InputStreamReader(System.in));
 		do { System.err.print("> "); }
-		while ( handleCommand(parseCommand(stdin.readLine())) );
+		while ( handleCommand(parseCommand(readLine(stdin))) );
 
 		// save on exit
 		Command.SAVE.execute();
+	}
+
+	private static String readLine(final BufferedReader reader) {
+		try { return reader.readLine(); }
+		catch (IOException e) { throw new RuntimeException(e); }
 	}
 
 

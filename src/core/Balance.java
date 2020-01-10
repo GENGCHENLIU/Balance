@@ -5,7 +5,28 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public final class Balance implements Iterable<Task> {
-	private final Set<EqualityByNameTaskWrapper> tasks;
+	/** Equality wrapper for Task to be used in Set that compares only task names. */
+	private static final class EqualityByNameTaskWrapper {
+		private final Task task;
+
+		private EqualityByNameTaskWrapper(final Task task) {
+			this.task = task;
+		}
+
+		@Override
+		public boolean equals(final Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+			return Objects.equals(task.name, ((EqualityByNameTaskWrapper) o).task.name);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hashCode(task.name);
+		}
+	}
+
+	private final Set<EqualityByNameTaskWrapper> tasks = new HashSet<>();
 
 	private final Properties config;
 	public Properties getConfig() { return config; }
@@ -14,13 +35,7 @@ public final class Balance implements Iterable<Task> {
 	public final Set<String> pendingDelete = new HashSet<>();
 
 	public Balance(final Properties config) {
-		tasks = new HashSet<>();
 		this.config = config;
-	}
-
-	@Override
-	public Iterator<Task> iterator() {
-		return adapt(tasks.iterator(), wrapper -> wrapper.task);
 	}
 
 	/**
@@ -43,7 +58,7 @@ public final class Balance implements Iterable<Task> {
 	 */
 	public boolean add(final Task task) {
 		pendingDelete.remove(task.name);
-		return tasks.add(new EqualityByNameTaskWrapper(task));
+		return tasks.add( new EqualityByNameTaskWrapper(task.init()) );
 	}
 
 	/**
@@ -56,25 +71,9 @@ public final class Balance implements Iterable<Task> {
 	}
 
 
-	/** Equality wrapper for Task to be used in Set that compares only task names. */
-	private static final class EqualityByNameTaskWrapper {
-		private final Task task;
-
-		private EqualityByNameTaskWrapper(final Task task) {
-			this.task = task;
-		}
-
-		@Override
-		public boolean equals(final Object o) {
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
-			return Objects.equals(task.name, ((EqualityByNameTaskWrapper) o).task.name);
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hashCode(task.name);
-		}
+	@Override
+	public Iterator<Task> iterator() {
+		return adapt(tasks.iterator(), wrapper -> wrapper.task);
 	}
 
 	/** Adapts an Iterator of type T to produce type R according to mapping function. */
