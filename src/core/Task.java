@@ -18,6 +18,13 @@ import java.util.*;
  * {@link #loadAndRegister(Path)}.
  */
 public abstract class Task {
+
+	////////////////////
+	// STATIC MEMBERS
+	// Related to task class loading and stuff
+	// See also core.TaskLoader
+	////////////////////
+
 	/** Registered types of Task. */
 	private static transient final Set<Class<? extends Task>> TYPES = new HashSet<>();
 	/** @return an unmodifiable view of the loaded types of Task */
@@ -67,6 +74,10 @@ public abstract class Task {
 		return register((Class<? extends Task>) cls);
 	}
 
+
+	////////////////////
+	// INSTANCE MEMBERS
+	////////////////////
 
 	@Mutable
 	public String name;

@@ -9,9 +9,9 @@ public class RateTask extends TimeDependentTask {
 	private volatile double counter = 0;
 	public double getCounter() { return counter; }
 	@Override
-	protected synchronized void update() { counter -= rate; }
+	public synchronized void update() { counter -= rate; }
 	@Override
-	protected synchronized void update(final long count) { counter -= count * rate; }
+	public synchronized void update(final long count) { counter -= count * rate; }
 
 	/** The rate at which the counter changes, in counts per second. */
 	@Mutable

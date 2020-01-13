@@ -38,8 +38,10 @@ public abstract class TimeDependentTask extends Task {
 
 	private transient boolean initted = false;
 	/**
-	 * Initializes this task to catch up missed updates repeatedly {@link #update()} at specified
-	 * {@link #interval}. See {@link Task#init()} for details.
+	 * Initializes this task to repeatedly {@link #update()} at specified
+	 * {@link #interval}. This method also caches up missed updates since program exit.
+	 * Invocations after the first has no effect.
+	 * @see Task#init()
 	 */
 	@Override
 	public synchronized Task init() {
@@ -59,12 +61,13 @@ public abstract class TimeDependentTask extends Task {
 	}
 
 	/** Perform some update, invoked every {@link #interval} milliseconds. */
-	protected abstract void update();
+	public abstract void update();
 	/**
 	 * {@link #update()} count times through a simple loop. Subclasses are recommended to
-	 * override this method for a more efficient implementation.
+	 * override this method if a more efficient implementation of repeated update is
+	 * available.
 	 */
-	protected void update(long count) {
+	public void update(long count) {
 		for (long i = 0; i < count; i++)
 			update();
 	}
