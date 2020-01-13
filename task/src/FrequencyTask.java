@@ -2,10 +2,12 @@ import core.Mutable;
 import core.TimeDependentTask;
 
 /**
- * A task that modifies its counter at some rate depending on its state.
+ * A task that modifies its counter at some rate.
+ * Each {@link #progress()} increments the counter, and only invocations of a sufficient
+ * frequency would be able to balance the decrements from {@link #update()}.
  */
-public class RateTask extends TimeDependentTask {
-	// because the counter value is updated using a rate, the value may not be an integer
+public class FrequencyTask extends TimeDependentTask {
+	// because the counter value is updated using a rate, the value may be not an integer
 	private volatile double counter = 0;
 	public double getCounter() { return counter; }
 	@Override
@@ -17,12 +19,12 @@ public class RateTask extends TimeDependentTask {
 	@Mutable
 	public volatile double rate;
 
-	public RateTask(final String name, final double rate) {
+	public FrequencyTask(final String name, final double rate) {
 		super(name);
 		this.rate = rate;
 	}
 
-	/** Makes progress on this RateTask. */
+	/** Increments the counter of this task by 1. */
 	@Override
 	public synchronized void progress() { counter++; }
 
