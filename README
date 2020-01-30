@@ -10,3 +10,8 @@ Tasks can be compiled individually with main program on the classpath.
 Compiled Task classes should be placed in the directory specified by the 
 'task_types_dir' property in the 'balance.properties' file. Files in said 
 directory will be loaded automatically at runtime.
+
+
+TODO
+add enum support
+allow method invocation through command line

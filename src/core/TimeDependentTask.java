@@ -21,7 +21,7 @@ public abstract class TimeDependentTask extends Task {
 	private volatile long lastUpdate = System.currentTimeMillis();
 	
 	/**
-	 * Equivalent to {@code TimeDependentTask(name, 1)}.
+	 * Equivalent to {@code TimeDependentTask(name, 1000)}.
 	 * @see	#TimeDependentTask(String, int)
 	 */
 	protected TimeDependentTask(final String name) {

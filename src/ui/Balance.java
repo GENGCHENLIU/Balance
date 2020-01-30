@@ -48,6 +48,7 @@ public final class Balance {
 		try {
 			Files.walk(Path.of(config.getProperty("task_types_dir")))
 					.filter(Files::isRegularFile)
+					.filter(path -> path.getFileName().toString().endsWith(".class"))
 					.forEach(path -> {
 						try { Task.loadAndRegister(path); }
 						catch (IOException e) {

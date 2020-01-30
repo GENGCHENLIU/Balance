@@ -8,8 +8,7 @@ import core.TimeDependentTask;
  */
 public class FrequencyTask extends TimeDependentTask {
 	// because the counter value is updated using a rate, the value may be not an integer
-	private volatile double counter = 0;
-	public double getCounter() { return counter; }
+	private double counter = 0;
 	@Override
 	public synchronized void update() { counter -= rate; }
 	@Override
